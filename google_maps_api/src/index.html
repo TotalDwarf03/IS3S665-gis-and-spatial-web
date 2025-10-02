@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps API Tutorial</title>
+
+    <script src="./js/mapUtils.js"></script>
+    <script src="./loadApiKey.js"></script>
+</head>
+<body>
+
+    <h1>Google Maps API Tutorial</h1>
+
+    <div id="map" style="height: 500px; width: 100%;">
+        <gmp-map
+            center="52.417, -3.573"
+            zoom="7"
+            map-id="demo-map"
+        ></gmp-map>
+    </div>
+
+    <script>
+        loadMapsAPI(apiKey);
+    </script>
+
+</body>
+</html>
