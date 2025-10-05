@@ -37,8 +37,26 @@ function initMap() {
         { position: { lat: 36.1699, lng: -115.1398 }, title: "Las Vegas", options: { icon: customMarker } }
     ];
 
+    const infoWindow = new google.maps.InfoWindow();
+
+    // Adjust map when info window is closed
+    infoWindow.addListener('close', function() {
+        map.fitBounds(bounds, padding = 50);
+    });
+
     markers.forEach(marker => {
-        addMarker(map, marker.position, marker.title, marker.options);
+        var marker = addMarker(map, marker.position, marker.title, marker.options);
+    
+        marker.addListener('click', async function() {
+            map.setZoom(8);
+            map.setCenter(marker.getPosition());
+
+            const content = await fetch(`./markerInfo/${marker.title.toLowerCase().replace(" ", "_")}.html`).then(response => response.text());
+
+            infoWindow.close();
+            infoWindow.setContent(content);
+            infoWindow.open(map, marker);
+        });
     });
 
     // Recalculate center based on markers
@@ -56,4 +74,6 @@ function addMarker(map, position, title, options = {}) {
         title: title,
         ...options
     });
+
+    return marker;
 }
